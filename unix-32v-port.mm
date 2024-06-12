@@ -1,10 +1,10 @@
 .\" London & Reiser's UNIX/32V porting paper
 .\"
-.\" Reconstruction in groff mm (but DWB 3.3 mm compatible)
-.\" from scanned/OCRed text by G. Branden Robinson, June 2024
+.\" Reconstruction in groff mm (but DWB 3.3 mm compatible) from
+.\" "32vscan.pdf" by G. Branden Robinson, June 2024.
 .\"
-.\" The original scan shows no evidence of superscript usage, except on
-.\" the cover sheet where "TM" superscripts "UNIX".
+.\" The scan shows no evidence of superscript usage, except on the cover
+.\" sheet where "TM" superscripts "UNIX".
 .\"
 .\" Some differences may arise due to changes in the mm macro package
 .\" itself from its PWB incarnation (ca. 1978) and DWB 3.3 (July 1992).
@@ -12,56 +12,65 @@
 .\" https://www.tuhs.org/pipermail/tuhs/2022-March/025545.html
 .\"
 .\" The groff reimplementation of mm was undertaken mostly from
-.\" 1991-1999 (by Juergen Haegg), based on the DWB documentation.  It
-.\" added features but also parameterized many aspects of package
+.\" 1991-1999 (by Joergen Haegg), based on the DWB documentation.  It
+.\" added features but also parameterized even more aspects of package
 .\" behavior, for example to facilitate easy localization.  Later,
 .\" Werner Lemberg and G. Branden Robinson contributed enhancements, bug
 .\" fixes, and improvements to the groff_mm(7) man page.
 .\"
-.\" I anticipate adding further parameters to groff mm to better
+.\" GBR anticipates adding further parameters to groff mm to better
 .\" emulate the old version of mm used by this paper.  (For example, the
 .\" format of the caption applied to the reference page differs between
 .\" ~PWB mm and DWB 3.3.)  Where this document exercises such
 .\" extensions, they should be prefixed with a `do` request so that AT&T
-.\" troff will ignore them.
+.\" (PWB/DWB) troff will ignore them.
 .nr Pt 1
 .nr Hy 1
 .nr Hu 1
 .ds HF 3
 .\" Override: "By default, ... bold stand-alone headings are printed
-.\" in a size one point smaller than the body."
+.\" in a size one point smaller than the body." (DWB 3.3 mm manual)
 .ds HP 10
 .ds UX UNIX\"
 .ds pD PDP-11\"
 .ds vX VAX-11\"
 .ds iD Interdata\ 8/32\"
+.nr y4 1900+\n(yr
+.af y4 0000
+.af mo 00
+.af dy 00
+.PF "''\s8Reconstructed by GBR \n(y4-\n(mo-\n(dy\s0''"
 .TL
 A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .AU "Thomas B.\& London" tbl HO 1353
 .AU "John F.\& Reiser" jfr HO 1353
 .TM 78-1353-4
 .ND "July 7, 1978"
-.\" XXX: The cover "page" (more like a header block) is a mess when
-.\" typeset with groff mm, and outright horrific in nroff mode.  GBR has
-.\" fixes for these pending for push to GNU Savannah's Git repository.
+.\" XXX: The cover "page" (more like a header block) is messy when
+.\" typeset with groff 1.23.0 and earlier mm, and outright horrific in
+.\" nroff mode.  GBR has fixes for these pending for push to GNU
+.\" Savannah's Git repository.
 .\"
-.\" XXX: Original scan capitalizes "Subject:"; DWB 3.3 renders it in
-.\" full lowercase.
+.\" Scan capitalizes "Subject:"; DWB 3.3 renders it in full lowercase.
+.\" GBR thinks this is not worth parameterizing in groff.
 .\"
-.\" XXX: Original scan bears a "TM:" heading for the technical
-.\" memorandum number(s).  DWB 3.3 lacks this.
+.\" Scan bears a "TM:" heading for the technical memorandum number(s).
+.\" DWB 3.3 lacks this.
 .\"
 .\" Memorandum captions may have changed from PWB to DWB 3.3 mm.  groff
-.\" mm has changed in Git (June 2024) to use the captions documented in
-.\" the DWB 3.3 manual.  We override the default for authenticity.
+.\" mm was updated in Git (June 2024) to use the captions documented in
+.\" the DWB 3.3 manual.  Here, we override the default for authenticity.
 .MT "MEMORANDUM FOR FILE"
 .H 1 Introduction
-The \*(vX/780\*(Rf
-.\" XXX: Original scan sets reference marks as a typewriter might, at
-.\" normal size on the baseline between square brackets.  DWB 3.3
-.\" converts them to superscripts but keeps the brackets(!).  groff mm
-.\" should add a "Rfstyle" register to control this.
+The \*(vX/780 \*(Rf
+.\" Scan sets reference marks as a typewriter might, at normal size on
+.\" the baseline between square brackets.  DWB 3.3 converts them to
+.\" superscripts but keeps the brackets(!).
+.\"
+.\" XXX: groff mm should add a "Rfstyle" register to control this.
 .\" 0 = auto (nroff/troff); 1 = bracket; 2 = superscript; 3 = both. (?)
+.\" Spaces/commas between adjacent \*(Rf interpolations would be the
+.\" responsibility of the document author.
 .RS
 Digital Equipment Corporation,
 .I "\*(vX/780 Architecture Handbook" .
@@ -85,7 +94,6 @@ details normally of interest only
 to devotees of computer system architecture appear in Section 3.
 The authors comment on software portability in Section 4.
 .H 1 Overview
-.P
 .B Environment.
 A user of \*(UX and C software on the \*(pD will find that
 the \*(vX/780 provides a very similar environment.
@@ -94,7 +102,7 @@ or the vast majority of programs
 which are customarily invoked directly from the shell.
 A casual user probably will not be able to distinguish
 the hardware,
-except by issuing the command "who am i" \" straight quotes in original
+except by issuing the command "who am i" \" straight quotes in scan
 (which identifies the hardware and the current user)
 or by noting that one of the columns printed
 by the process status command
@@ -103,7 +111,7 @@ is in hexadecimal rather than octal.
 The C language programmer will find that
 .B int ,
 .B long ,
-pointer data types all occupy 4 bytes
+and pointer data types all occupy 4 bytes
 (a
 .B short
 still occupies 2 bytes),
@@ -120,7 +128,7 @@ but one may use the declaration
 The \*(vX is a follow-on computer to the \*(pD.
 The architecture seen
 by the user-mode assembly-language programmer of a \*(vX
-is "culturally compatible" \" straight quotes in original
+is "culturally compatible" \" straight quotes in scan
 with the \*(pD.
 Specific details differ,
 but a programmer familiar with the \*(pD
@@ -155,8 +163,12 @@ Adequate airflow is maintained even under maintenance conditions.
 .B Configuration.
 The actual configuration purchased by Department 1353 is:
 .br
-.ns \" XXX: Hack to keep `VL` from adding pre-list vertical space.
-.VL \n(Pi 0 1
+.\" Either `VL` worked differently in 1978 mm, or didn't exist, or
+.\" somebody wanted this list _just so_.
+.\"VL \n(Pi 0 1
+.LB \n(Pi "" "" 0 0 0
+.\" DWB mm requires the list item to be an unadjustable space to get the
+.\" effect desired here.  groff mm tolerates an ordinary space.
 .LI "\ "
 \*(vX/780 cpu
 .LI "\ "
@@ -164,22 +176,22 @@ The actual configuration purchased by Department 1353 is:
 .LI "\ "
 floating-point accelerator
 .LI "\ "
-12Kbyte uses-writeable control store
+12Kbyte user-writeable control store
 .LI "\ "
 UNIBUS adaptor with DZ11 (8 RS-232C lines)
 .LI "\ "
 MASSBUS adaptor with TE16 tape drive (800/1600 bpi)
 .LI "\ "
-MASSBUS adaptor with two RP06 disk spindles (176Mbytes per spindle)
+MASSBUS adaptor with two RP06 disk spindles (176M bytes per spindle)
 .LI "\ "
-additional BA1IKE UNIBUS box
+additional BA11KE UNIBUS box
 .LE
 The list price of the above configuration in February 1978 was $241,255;
 the price
 including a DEC discount to a Bell Labs purchaser was $200,242.
 .P
 .B Software.
-We have implemented a \*(UX operating system\*(Rf
+We have implemented a \*(UX operating system \*(Rf
 .RS
 D.\ M.\ Ritchie and K.\ Thompson,
 The \*(UX Time-Sharing System,
@@ -187,7 +199,7 @@ CACM
 .I 17 ,
 (July 1974),
 365-375.
-See also BTSJ 57,
+See also BSTJ 57,
 6 (July-August 1978),
 1905-1929.
 .RF
@@ -262,7 +274,7 @@ were:
 center;
 C S S S
 L N N N.
-nroff \-ms \-e \-T450\-12 ios.r > /dev/null
+nroff \-ms \-e \-T450\-12 ios.r >/dev/null
 \&
 \&	real	user	sys
 \*(vX/780	47.0	28.6	8.7
@@ -277,8 +289,8 @@ cc \-c \-O pftn.c
 \&	real	user	sys
 \*(pD/70 (Ritchie compiler)	86.0	43.5	11.8
 \*(vX/780 (portable compiler)	82.0	64.0	10.5
-\*(pD/70 (portable compiler)	153.0	114.6	16.6
-  for \*(iD
+\*(pD/70 (portable compiler	153.0	114.6	16.6
+  for \*(iD)
 .TE
 .P
 From the statistics on
@@ -302,8 +314,8 @@ are not significant.
 .P
 The times given for compilation of the file
 .I pftn.c
-are an attempt at a "black box" \" straight quotes in original
-comprison of appies and oranges.
+are an attempt at a "black box" \" straight quotes in scan
+comparison of apples and oranges.
 The black box is any program (compiler) which takes C language
 input and produces executable instructions.
 The black-box comparison is that the current
@@ -321,7 +333,7 @@ totally different pieces of software.
 The \*(pD compiler is a production compiler
 written by D.\ M\. Ritchie;
 the \*(vX compiler is a portable compiler
-ased on work by S.\ C.\  Johnson.
+based on work by S.\ C.\  Johnson.
 The figures for the portable compiler running on the \*(pD/70
 and compiling for the \*(iD
 are included for those who wish to compare two portable compilers.
@@ -401,7 +413,7 @@ each subsystem decides if it will use the next bus cycle.
 The central processor
 is a microprogrammed 32-bit general-register computer.
 The architecture seen by the user-mode assembly-language programmer
-is "culturally compatible" \" straight quotes in original
+is "culturally compatible" \" straight quotes in scan
 with the \*(pD;
 an expert programmer familiar with the \*(pD
 can learn and understand the differences in one day or less.
@@ -410,9 +422,9 @@ single precision
 (32 bit)
 and double precision
 (64 bit)
-floating-point numbers,
+floating-point numbers;
 character strings
-up to 65535 bytes long,
+up to 65535 bytes long;
 bit fields up to 32 bits wide;
 and IBM-style packed decimal strings up to 31 digits long.
 Bit fields have no alignment restrictions whatsoever;
@@ -422,7 +434,7 @@ boundary.
 The central processor provides sixteen 32-bit general registers.
 Register 15 is the program counter
 .B pc .
-Software operating in one of privileged access modes
+Software operating in one of the privileged access modes
 (see below)
 must use register 14 as a stack pointer
 .B sp .
@@ -438,7 +450,7 @@ register 13
 the frame pointer)
 and register 12
 .RB ( ap ,
-argument pointer).
+the argument pointer).
 The instructions which handle character
 and packed decimal strings
 use registers 0 through 5 to hold pointers and counters,
@@ -468,7 +480,7 @@ The \*(vX/780 processor includes an eight kilobyte,
 two-way set associative,
 write-through,
 memory data cache;
-an eight-byte instruction stream buffer,
+an eight-byte instruction stream buffer;
 and a 128-address virtual address translation buffer.
 Most of the processor is implemented in Schottky TTL MSI logic.
 A programmable realtime clock and a time-of-year clock
@@ -484,7 +496,7 @@ DECwriter terminal,
 and remote-access communications port.
 The console is connected directly to
 the central processor and performs all the functions
-of a conventional "lights and switches" \" straight quotes in original
+of a conventional "lights and switches" \" straight quotes in scan
 front panel.
 The floppy disk serves as the initial bootstrap device
 for normal operation
@@ -558,7 +570,7 @@ for mapping UNIBUS addresses to and from SBI addresses.
 The maximum throughput on a UBA is 1.5 megabytes per second.
 A MASSBUS adaptor (MBA) is an interface
 between the SBI and MASSBUS devices
-(RPC6 disk,
+(RP06 disk,
 TE16 tape,
 etc.).
 An MBA would be more properly called an RH-780 controller,
@@ -578,13 +590,13 @@ as long as the sum of the number of central processors,
 memory controllers,
 MBAs,
 and twice the number of UBAs were 15 or less,
-since the SBI has 15 "ports". \" straight quotes in original
+since the SBI has 15 "ports". \" straight quotes in scan
 .P
 The physical packaging of the system
 has been dramatically improved
 compared with the \*(pD.
 The \*(vX/780 processor cabinet contains no drawers or moving cables.
-The SBI fixed and rigid.
+The SBI is fixed and rigid.
 Three one-third horsepower squirrel-cage blowers provide
 sufficient air flow \(em even while servicing the CPU.
 Any logic card,
@@ -601,7 +613,7 @@ Our configuration
 (see section 2)
 weighs 3452 pounds and requires 42050 BTU/hr cooling.
 .HU "C Compiler"
-A \*(vX "native mode" \" straight quotes in original
+A \*(vX "native mode" \" straight quotes in scan
 C compiler was constructed using S.\ C.\ Johnson's
 portable compiler as a base.
 After one month,
@@ -632,7 +644,7 @@ as well as three-address instructions are used.
 .P
 Overall,
 our experience with the compiler has been very favorable.
-When the VAX 11/780 was delivered,
+When the \*(vX/780 was delivered,
 the compiler worked well enough to compile itself,
 the \*(UX kernel,
 and many user-level commands.
@@ -655,7 +667,7 @@ as the production \*(vX compiler.
 .P
 There are still some deficiencies
 in the current version of the compiler,
-as well as in the basic "product" itself. \" straight quotes in original
+as well as in the basic "product" itself. \" straight quotes in scan
 The compiler is slow and quite large;
 see the statistics in section\ 2 and Table\ 1.
 Some of the blame for the size and lethargy
@@ -710,8 +722,8 @@ and
 the routine used to convert
 from ASCII to binary
 contained a bug
-which caused "\-2147483648" \" straight quotes in original
-(which is \-(2**31))
+which caused "\-2147483648" \" straight quotes in scan
+(which is \-(2**31) )
 to be read as zero on our \*(pD/45.)
 .P
 The above problems are not inherent to the compiler model.
@@ -763,7 +775,7 @@ and
 .DE
 since register
 .B r0
-must be considered "live" \" straight quotes in original
+must be considered "live" \" straight quotes in scan
 (i.e.,
 contains a value which may be required later)
 across the return statement.
@@ -887,9 +899,9 @@ even though
 previous hardware architectures
 (IBM 360,
 \*(pD,
-\*(iD, ...) \" bad ellipsis spacing in original
+\*(iD, ...) \" bad ellipsis spacing in scan
 have imposed alignment restrictions based on size.
-The VAX 11/780 \" - missing; error in text or scanner fubar?
+The VAX 11/780 \" - in "VAX-11" missing; error in text or scanner fubar?
 has no such restrictions,
 although programs run faster with data aligned on natural boundaries.
 The C language has little notion of alignment;
@@ -973,10 +985,10 @@ were then used to bring up the system.
 Establishing an initial file system on the disk
 took longer than expected.
 The \*(pD/45 was running USG issue 3 of the \*(UX
-operating system with a "16-bit" \" straight quotes in original
+operating system with a "16-bit" \" straight quotes in scan
 file system
 and the \*(vX/780 was to have a Research version 7
-"32-bit" \" straight quotes in original
+"32-bit" \" straight quotes in scan
 file system.
 Also,
 C-language code on the \*(vX
@@ -1013,7 +1025,7 @@ and interrupt stack occupy the \*(vX/780 system segment
 User code and data are loaded into segment zero
 (0 to 3fffffff)
 and the user stack is initialized in segment one
-(7ffffff to 40000000).
+(7fffffff to 40000000).
 User processes pass arguments to system service code using the ordinary
 .B calls
 subroutine calling sequence.
@@ -1103,8 +1115,8 @@ as
 .P
 The implementation of context switching required major effort.
 The \*(vX has two very nice instructions
-.RB ( svpetx ,
-save process context,
+.RB ( svpctx ,
+save process context;
 and
 .B ldpctx ,
 load process context)
@@ -1129,7 +1141,8 @@ The \*(UX context switching mechanism
 requires three state save areas,
 .I u.u_rsav ,
 .I u.u_ssav ,
-.I u.u_qsav ,
+and
+.I u.u_qsav
 because the same mechanism is also used for abnormal returns.
 The \*(vX context switching instructions
 use only a single state save area.
@@ -1151,7 +1164,7 @@ of registers would be needed
 to map the address space of a user process,
 while on the \*(vX a 32K process requires 64 page table entries.
 Furthermore,
-the memory of a process is diddled in tricky ways,
+the memory map of a process is diddled in tricky ways,
 particularly in
 .I expand
 and
@@ -1212,7 +1225,7 @@ The code in
 for sending a signal to a process involves a tedious simulation of the
 .B calls
 instruction due to the problem
-of "inward return" \" straight quotes in original
+of "inward return" \" straight quotes in scan
 across privilege modes upon termination of the routine
 which handles the signal.
 Making a portion of the kernel code readable by a
@@ -1233,7 +1246,7 @@ which means that every procedure
 must start on an even byte boundary.
 The C compiler thus issues a pseudo-op to the assembler
 to align the beginning of each procedure.
-This can waste on a \*(vX.
+This can waste memory on a \*(vX.
 It also imposes a nontrivial requirement on the assembler,
 since if the resolution of conditional jump instructions
 can change the parity of the length of a procedure
@@ -1255,7 +1268,7 @@ Integer overflow,
 floating overflow,
 floating underflow,
 and reserved operand also need signal numbers.
-Perhaps only one "error" signal \" straight quotes in original
+Perhaps only one "error" signal \" straight quotes in scan
 is needed with some other means for determining the true fault.
 The whole business of interrupts,
 signals,
@@ -1295,7 +1308,7 @@ Ordinarily the exit was processed immediately,
 causing no harm.
 But if the system was loaded so that swapping was necessary,
 then the scheduler could sneak in
-after child exited and before the parent read the statistics,
+after the child exited and before the parent read the statistics,
 and would interpret the timing data
 in the zombie
 .I xproc
@@ -1310,7 +1323,7 @@ When converting between floating-point and 32-bit integer,
 the FP-11 expects the high-order 16 bits of the integer
 to be stored at the lower memory address;
 this is not in line
-with the general "right to left" design \" straight quotes in original
+with the general "right to left" design \" straight quotes in scan
 of the \*(pD,
 which would place the low-order 16 bits in the lower memory address.
 C code for the \*(pD uses the FP-11 convention for storing
@@ -1370,7 +1383,7 @@ Conversion of the standard input/output library
 .B libS
 posed no problems
 except for
-.I __doprnt ,
+.I _doprnt ,
 the routine which constructs character representations
 of other datatypes for the printing routines
 .I printf ,
@@ -1378,7 +1391,7 @@ of other datatypes for the printing routines
 and
 .I sprintf .
 Since many programs spend 15% to 20% of their execution time within
-.I __doprnt ,
+.I _doprnt ,
 it pays to code the routine for speed in assembly language.
 Packed-decimal instructions handle decimal,
 unsigned,
@@ -1404,20 +1417,20 @@ detects and corrects the spurious overflow.
 .B "as, ld."
 Code developed by Center 127 for the \*(iD
 was the model for an interpretation by a \*(vX/780 artist.
-The assembler uses an algorithm described in\*(Rf
+The assembler uses an algorithm described in \*(Rf
 .RS
 W.\& Wulf,
 R.\& K.\& Johnsson,
 C.\& B.\& Weinstock,
 S.\& O.\& Hobbs,
 and
-C.\& M.\& Gescke,
+C.\& M.\& Geschke,
 .I "The Design of an Optimizing Compiler" .
 American Elsevier,
 New York,
 1975.
 .RF
-with heuristic improvement of\*(Rf
+with heuristic improvement of \*(Rf
 .RS
 J.\& F.\& Reiser,
 Common Instances of Pathological Span-dependent Instructions,
@@ -1441,7 +1454,7 @@ within object files.
 The code improver for the assembly language
 generated by the \*(vX C compiler
 is based on a similar program for the \*(pD.
-A "backwards" register usage pass, \" straight quotes in original
+A "backwards" register usage pass, \" straight quotes in scan
 performed once and before anything else,
 was a major addition.
 Knowing that no temporary register is live across a backwards jump,
@@ -1530,7 +1543,7 @@ These two commands did not count
 their arguments using the first parameter
 .I argc ,
 but rather assumed that an additional argument
-.RI ( argv/[argc],
+.RI ( argv[argc],
 initialized as -1) \" recte: \-1
 could be used as a pointer.
 On the \*(pD the resulting address
@@ -1548,7 +1561,7 @@ of these commands.
 Use of the explicit
 (or worse,
 implicit)
-constant "2" \" straight quotes in original
+constant "2" \" straight quotes in scan
 instead of
 .B sizeof(int)
 was quite common.
@@ -1569,7 +1582,7 @@ was created using the converted
 programs on the \*(vX/780.
 .P
 .B SCCS.
-Version 4 of the Source Code Control System\*(Rf
+Version 4 of the Source Code Control System \*(Rf
 .RS
 .I "SCCS/PWB User's Manual, The Source Code Control System" .
 .RF
@@ -1596,8 +1609,8 @@ to bomb.
 The code implicitly assumed that all checksums
 were computed modulo 65536.
 The documentation is incorrect:
-everywhere "99999" appears \" straight quotes in original
-it should really say "65535". \" straight quotes in original
+everywhere "99999" appears \" straight quotes in scan
+it should really say "65535". \" straight quotes in scan
 The procedure
 .I satoi
 returns two values,
@@ -1633,7 +1646,7 @@ be enhanced so that
 .LI
 The actual arguments in a procedure call
 are type checked against the procedure declaration,
-and a "dummy" declaration \" straight quotes in original
+and a "dummy" declaration \" straight quotes in scan
 which specifies types
 is permitted even if the called procedure
 is not actually declared in the same compilation.
@@ -1660,7 +1673,8 @@ so that arbitrary data structures can be accurately described.
 .LE
 .P
 There is a program called
-.I lint \*(Rf
+.I lint
+\*(Rf
 .RS
 S.\& C.\& Johnson,
 .I lint ,
@@ -1688,7 +1702,7 @@ as a matter of course.
 The authors believe that type checking belongs
 in the everyday compiler as the default,
 where it is very inexpensive to implement.
-Those who wish to do "dirty" work \" straight quotes in original
+Those who wish to do "dirty" work \" straight quotes in scan
 may request that type checking be disabled;
 those who wish to bless their dirty work may use type casts.
 .P
@@ -1707,37 +1721,77 @@ G.\& K.\& Swanson,
 for assistance with boot procedures and stand-alone utilities;
 J.\& F.\& Jarvis,
 for the mathematical function library;
+and
 D.\& K.\& Sharma,
 for help in bringing up user-level commands.
 Additional thanks go to many other members of Centers 127 and 135,
 and Department 8234,
 for helpful comments and suggestions.
-.\" XXX: Scan has signatures set farther to the right, not centered as
-.\" DWB 3.3 mm sets them.  groff mm follows DWB here.
+.P
+.I "2024 Reconstruction Notes."
+Dennis Ritchie made available a scan of the original London/Reiser paper
+circa 2003,
+the basis of this reconstruction.
+Unfortunately,
+no
+.I mm
+source document was offered;
+Ritchie made available new PDF and PostScript versions
+that appear to have been converted to the
+.I ms
+macro package or similar,
+and introduced an abstract.
+.P
+.I "2024 Reconstruction Acknowledgments."
+Naoki Hamada prepared
+an HTML conversion of Ritchie's converted form of the paper
+that proved invaluable in detecting OCR and transcription errors.
+Thanks to
+Arnold Robbins
+and
+Damian McGuckin
+for catching typographical errors.
+McGuckin also spotted clumsy
+.I mm
+macro usage.
+Jonathan Gray kindly reminded this reconstructor
+of Ritchie's resource page,\c
+.ds fM \s-2\v'-.3m'*\v'+.3m'\s0
+\*(fM
+.FS \*(fM
+https://www.bell\-labs.com/usr/dmr/www/portpapers.html
+.FE
+which may be the origin of the numerous copies of
+.I 32vscan.pdf
+on the Web.
+.\" Scan has signatures set farther to the right, not left-aligned at
+.\" the page's vertical centerline where DWB 3.3 mm sets them.  groff mm
+.\" follows DWB here.
 .\"
-.\" XXX: PWB and DWB 3.3 put the signature names in bold; groff mm sets
-.\" them at normal weight.  Bug.
+.\" XXX: Scan and DWB 3.3 put the signature names in bold; groff mm sets
+.\" them at normal weight.  Align groff mm with DWB.
 .\"
 .\" XXX: Scan has a couple of vees between the signature line and the
-.\" flush left secretarial annotation.  groff mm sets the annotation on
+.\" flush left secretarial annotation (containing arguments after the
+.\" first to `AU` macro calls).  groff mm sets the annotation on
 .\" the same line as the last author but also puts its information in
-.\" the cover page header as DWB 3.3 does, described next.  DWB 3.3: (1)
-.\" omits the secretarial annotation altogether, putting it up in the
-.\" cover page header under the authors' names; (2) does not use author
-.\" initials (in the cover header) for this memorandum type; (3) puts
-.\" the department number after "Org." on the line under the author
-.\" name; (4) puts the abbreviated AT&T site name below that.  Should we
-.\" consider a `Sgstyle` register for groff mm?
+.\" the cover header as DWB 3.3 does, described next.  DWB 3.3: (1)
+.\" omits the secretarial annotation altogether, but puts the third and
+.\" subsequent `AU` arguments in the cover header under the authors'
+.\" names; (2) does not use author initials (in the cover header) for
+.\" this memorandum type; (3) puts the department number after "Org." on
+.\" the line under the author name; (4) puts the abbreviated AT&T site
+.\" name below that.  Should we consider a `Sgstyle` register for groff
+.\" mm?
 .\"
 .\" XXX: groff mm organizes the department and site name differently
 .\" from DWB 3.3 in the cover head, and I don't see any reason for it
-.\" to.  Fix this.
+.\" to.  Fix this.  See if DWB injects breaks after some arguments.
 .SG
-.NS "Att:" 1
-.\" XXX: Scan only breaks between notations; DWB 3.3 and groff put 1v
-.\" between them.  Should we consider an `Nss` register for groff mm?
-.NS "References" 1
-.NS "Table 1" 1
+.NS 3
+References
+Table 1
+.NE
 .RP "" 2
 .\" XXX: Scan has references caption set flush left, in mixed case and
 .\" bold (just like `HU`).  DWB 3.3 and groff center it and set it in
@@ -1747,11 +1801,12 @@ for helpful comments and suggestions.
 .\"
 .\" XXX: The numbered reference list does not look like one produced
 .\" with `RL` nor with `AL`.  The numeric tag is left-aligned within the
-.\" paragraph indentation.  groff mm aligns it to the right.
+.\" paragraph indentation.  groff mm aligns it to the right.  Extend
+.\" groff mm to support this.
 .\"
-.\" DWB 3.3 and Heirloom mm don't seem to honor `.RP 2` as the DWB
+.\" DWB 3.3 and Heirloom mm don't seem to honor `.RP "" 2` as the DWB
 .\" manual documents.  They start the table immediately after the
-.\" reference list and go haywire boxing the table.  Bug.
+.\" reference list and go haywire boxing the table.  Bug in DWB.
 .TS
 box center;
 L L C C C C
