@@ -12,8 +12,9 @@
 .\" https://www.tuhs.org/pipermail/tuhs/2022-March/025545.html
 .\"
 .\" The groff reimplementation of mm was undertaken mostly from
-.\" 1991-1999 (by Joergen Haegg), based on the DWB documentation.  It
-.\" added features but also parameterized even more aspects of package
+.\" 1991-1999 (by Joergen Haegg), based on the DWB documentation and
+.\" James Clark's reimplementation of the ms macro package.  It added
+.\" features but also parameterized even more aspects of package
 .\" behavior, for example to facilitate easy localization.  Later,
 .\" Werner Lemberg and G. Branden Robinson contributed enhancements, bug
 .\" fixes, and improvements to the groff_mm(7) man page.
@@ -46,16 +47,48 @@ A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .AU "John F.\& Reiser" jfr HO 1353
 .TM 78-1353-4
 .ND "July 7, 1978"
-.\" XXX: The cover "page" (more like a header block) is messy when
-.\" typeset with groff 1.23.0 and earlier mm, and outright horrific in
-.\" nroff mode.  GBR has fixes for these pending for push to GNU
-.\" Savannah's Git repository.
+.\" groff <= 1.23 typesets the cover "page" (more like a header)
+.\" messily.  In nroff mode, it's outright horrific.  Fixed in groff
+.\" Git, June 2024.
+.\"
+.\" The scan lays out the "affiliated firm" (`AF` macro content)
+.\" differently than DWB 3.3.  DWB draws a long rule starting at the
+.\" left margin and overdrawing the right one by an inch, maybe.  It
+.\" also sets the firm name in larger type than the body, possibly bold,
+.\" and aligned with the right-hand column of document metadata.  DWB
+.\" 3.3 sets it under the rule at the left margin in Helvetica roman.
+.\"
+.\" XXX: Consider an `Afstyle` register to switch to this style?
+.\"
+.\" The 1978 AT&T logo also appears in the document.  GBR has no
+.\" appetite for trademark entanglements, though Tadziu Hoffman has
+.\" prepared a reconstruction of it in PostScript, which could be
+.\" included with groff's `PSPIC` or `PDFPIC` macros...
 .\"
 .\" Scan capitalizes "Subject:"; DWB 3.3 renders it in full lowercase.
 .\" GBR thinks this is not worth parameterizing in groff.
 .\"
+.\" XXX: To reproduce this document better, groff mm needs an `Aumt`
+.\" threshold register to keep some `AU` arguments from printing in the
+.\" cover header.  We can't just drop them from the reconstruction
+.\" because they are also used to the construct the secretarial
+.\" annotation produced by `SG`.
+.\"
+.\" In the scan, the right column of the cover header happily overrruns
+.\" the right margin.  GBR thinks this is not worth parameterizing in
+.\" groff.
+.\"
+.\" (In fact, the size and placement of the right column appear to be
+.\" computed to precisely fit the words "Bell Laboratories" in the font
+.\" used.  This practice obviously does not generalize well.)
+.\"
 .\" Scan bears a "TM:" heading for the technical memorandum number(s).
-.\" DWB 3.3 lacks this.
+.\" DWB 3.3 lacks it.  GBR thinks this is not worth parameterizing in
+.\" groff.
+.\"
+.\" groff mm <= 1.23 organizes the department and site name differently
+.\" from DWB 3.3 in the cover header; GBR didn't see any reason for it
+.\" to.  Fixed in groff Git, June 2024.
 .\"
 .\" Memorandum captions may have changed from PWB to DWB 3.3 mm.  groff
 .\" mm was updated in Git (June 2024) to use the captions documented in
@@ -67,10 +100,13 @@ The \*(vX/780 \*(Rf
 .\" the baseline between square brackets.  DWB 3.3 converts them to
 .\" superscripts but keeps the brackets(!).
 .\"
-.\" XXX: groff mm should add a "Rfstyle" register to control this.
+.\" XXX: groff mm should add a "Rfstyle" register to control the
+.\" foregoing.
 .\" 0 = auto (nroff/troff); 1 = bracket; 2 = superscript; 3 = both. (?)
 .\" Spaces/commas between adjacent \*(Rf interpolations would be the
-.\" responsibility of the document author.
+.\" responsibility of the document author.  A document could define, for
+.\" example, an `rF` macro that interpolated the `Rf` string and
+.\" included a leading space only `.if n`.
 .RS
 Digital Equipment Corporation,
 .I "\*(vX/780 Architecture Handbook" .
@@ -1773,20 +1809,16 @@ on the Web.
 .\"
 .\" XXX: Scan has a couple of vees between the signature line and the
 .\" flush left secretarial annotation (containing arguments after the
-.\" first to `AU` macro calls).  groff mm sets the annotation on
+.\" second to `AU` macro calls).  groff mm sets the annotation on
 .\" the same line as the last author but also puts its information in
 .\" the cover header as DWB 3.3 does, described next.  DWB 3.3: (1)
 .\" omits the secretarial annotation altogether, but puts the third and
 .\" subsequent `AU` arguments in the cover header under the authors'
-.\" names; (2) does not use author initials (in the cover header) for
-.\" this memorandum type; (3) puts the department number after "Org." on
-.\" the line under the author name; (4) puts the abbreviated AT&T site
-.\" name below that.  Should we consider a `Sgstyle` register for groff
-.\" mm?
-.\"
-.\" XXX: groff mm organizes the department and site name differently
-.\" from DWB 3.3 in the cover head, and I don't see any reason for it
-.\" to.  Fix this.  See if DWB injects breaks after some arguments.
+.\" names [the scan does not]; (2) does not use author initials (in the
+.\" cover header) (3) puts the department number after "Org." on the
+.\" line under the author name; (4) puts the abbreviated AT&T site name
+.\" below that.  Should we consider a `Sganno` Boolean-valued register
+.\" for groff mm?
 .SG
 .NS 3
 References
@@ -1807,6 +1839,7 @@ Table 1
 .\" DWB 3.3 and Heirloom mm don't seem to honor `.RP "" 2` as the DWB
 .\" manual documents.  They start the table immediately after the
 .\" reference list and go haywire boxing the table.  Bug in DWB.
+.\" (You could work around it by using `.TS H` and `.TH`.)
 .TS
 box center;
 L L C C C C
