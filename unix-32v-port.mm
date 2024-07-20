@@ -17,7 +17,7 @@
 .\" features but also parameterized even more aspects of package
 .\" behavior, for example to facilitate easy localization.  Later,
 .\" Werner Lemberg and G. Branden Robinson contributed enhancements, bug
-.\" fixes, and improvements to the groff_mm(7) man page.
+.\" fixes, and improvements to the groff mm package and man page.
 .\"
 .\" GBR anticipates adding further parameters to groff mm to better
 .\" emulate the old version of mm used by this paper.  (For example, the
@@ -25,6 +25,11 @@
 .\" ~PWB mm and DWB 3.3.)  Where this document exercises such
 .\" extensions, they should be prefixed with a `do` request so that AT&T
 .\" (PWB/DWB) troff will ignore them.
+.do ds XX \" empty; dummy string for ending macros
+.ie \n(.g .do de REFX XX
+.el       .ig XX
+.HU References
+.XX
 .nr Pt 1
 .nr Hy 1
 .nr Hu 1
@@ -1804,8 +1809,8 @@ on the Web.
 .\" the page's vertical centerline where DWB 3.3 mm sets them.  groff mm
 .\" follows DWB here.
 .\"
-.\" XXX: Scan and DWB 3.3 put the signature names in bold; groff mm sets
-.\" them at normal weight.  Align groff mm with DWB.
+.\" Scan and DWB 3.3 put the signature names in bold; groff <= 1.23 sets
+.\" them at normal weight.  Fixed in groff Git, June 2024.
 .\"
 .\" XXX: Scan has a couple of vees between the signature line and the
 .\" flush left secretarial annotation (containing arguments after the
