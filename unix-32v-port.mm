@@ -1,3 +1,6 @@
+.\" groff -t -rO1.25i -rW6i -mm
+.\" nroff -t -rW65n -mm
+.\"
 .\" London & Reiser's UNIX/32V porting paper
 .\"
 .\" Reconstruction in groff mm (but DWB 3.3 mm compatible) from
@@ -19,15 +22,13 @@
 .\" Werner Lemberg and G. Branden Robinson contributed enhancements, bug
 .\" fixes, and improvements to the groff mm package and man page.
 .\"
-.\" GBR anticipates adding further parameters to groff mm to better
-.\" emulate the old version of mm used by this paper.  (For example, the
-.\" format of the caption applied to the reference page differs between
-.\" ~PWB mm and DWB 3.3.)  Where this document exercises such
-.\" extensions, they should be prefixed with a `do` request so that AT&T
-.\" (PWB/DWB) troff will ignore them.
+.\" groff Git, October 2024, supports an `RPX` hook macro permitting the
+.\" document to assume responsibility for laying out the caption of the
+.\" accumulated reference list.
 .do ds XX \" empty; dummy string for ending macros
-.ie \n(.g .do de REFX XX
+.ie \n(.g .do de RPX XX
 .el       .ig XX
+.SP 3
 .HU References
 .XX
 .nr Pt 1
@@ -50,8 +51,26 @@
 A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .AU "Thomas B.\& London" tbl HO 1353
 .AU "John F.\& Reiser" jfr HO 1353
+.do ds Aumt 3 4\" suppress these AU fields from metadata block
+.do nr Rfstyle 1
+.ds Rpfmt \\n[Li] 0 0 1 0 0 0\"
 .TM 78-1353-4
 .ND "July 7, 1978"
+.if !\n(.g .ig
+.do de AFX
+.  do in \\n[cov*column3-hpos]u \" groff mm "0.MT' internal register
+.  ft B
+.  ps 72
+.  sp |1i
+.  if t .do nop \(ci
+.  sp |1i+1.5v
+.  ps
+.  ps 12
+.  do nop Bell Laboratories
+.  ps
+.  ft
+.  do in
+..
 .\" groff <= 1.23 typesets the cover "page" (more like a header)
 .\" messily.  In nroff mode, it's outright horrific.  Fixed in groff
 .\" Git, June 2024.
@@ -63,21 +82,23 @@ A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .\" and aligned with the right-hand column of document metadata.  DWB
 .\" 3.3 sets it under the rule at the left margin in Helvetica roman.
 .\"
-.\" XXX: Consider an `Afstyle` register to switch to this style?
-.\"
 .\" The 1978 AT&T logo also appears in the document.  GBR has no
 .\" appetite for trademark entanglements, though Tadziu Hoffman has
 .\" prepared a reconstruction of it in PostScript, which could be
 .\" included with groff's `PSPIC` or `PDFPIC` macros...
 .\"
+.\" groff Git, July 2024, supports an `AFX` hook macro permitting the
+.\" document to assume responsibility for laying out the affiliated
+.\" firm/letterhead.
+.\"
 .\" Scan capitalizes "Subject:"; DWB 3.3 renders it in full lowercase.
 .\" GBR thinks this is not worth parameterizing in groff.
 .\"
-.\" XXX: To reproduce this document better, groff mm needs an `Aumt`
-.\" threshold register to keep some `AU` arguments from printing in the
-.\" cover header.  We can't just drop them from the reconstruction
-.\" because they are also used to the construct the secretarial
-.\" annotation produced by `SG`.
+.\" To reproduce this document better, groff mm implements a string to
+.\" keep some `AU` arguments from printing in the cover header.  We
+.\" can't just drop them from the reconstruction because they are also
+.\" used to the construct the secretarial annotation produced by `SG`.
+.\" groff Git, September 2024, supports `Aumt` for this purpose.
 .\"
 .\" In the scan, the right column of the cover header happily overrruns
 .\" the right margin.  GBR thinks this is not worth parameterizing in
@@ -98,20 +119,10 @@ A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .\" Memorandum captions may have changed from PWB to DWB 3.3 mm.  groff
 .\" mm was updated in Git (June 2024) to use the captions documented in
 .\" the DWB 3.3 manual.  Here, we override the default for authenticity.
-.MT "MEMORANDUM FOR FILE"
+.ie \n(.g .MT "MEMORANDUM FOR FILE"
+.el       .MT
 .H 1 Introduction
 The \*(vX/780 \*(Rf
-.\" Scan sets reference marks as a typewriter might, at normal size on
-.\" the baseline between square brackets.  DWB 3.3 converts them to
-.\" superscripts but keeps the brackets(!).
-.\"
-.\" XXX: groff mm should add a "Rfstyle" register to control the
-.\" foregoing.
-.\" 0 = auto (nroff/troff); 1 = bracket; 2 = superscript; 3 = both. (?)
-.\" Spaces/commas between adjacent \*(Rf interpolations would be the
-.\" responsibility of the document author.  A document could define, for
-.\" example, an `rF` macro that interpolated the `Rf` string and
-.\" included a leading space only `.if n`.
 .RS
 Digital Equipment Corporation,
 .I "\*(vX/780 Architecture Handbook" .
@@ -237,8 +248,8 @@ We have implemented a \*(UX operating system \*(Rf
 D.\ M.\ Ritchie and K.\ Thompson,
 The \*(UX Time-Sharing System,
 CACM
-.I 17 ,
-(July 1974),
+.IR 17 ,
+7 (July 1974),
 365-375.
 See also BSTJ 57,
 6 (July-August 1978),
@@ -1812,44 +1823,29 @@ on the Web.
 .\" Scan and DWB 3.3 put the signature names in bold; groff <= 1.23 sets
 .\" them at normal weight.  Fixed in groff Git, June 2024.
 .\"
-.\" XXX: Scan has a couple of vees between the signature line and the
-.\" flush left secretarial annotation (containing arguments after the
-.\" second to `AU` macro calls).  groff mm sets the annotation on
-.\" the same line as the last author but also puts its information in
-.\" the cover header as DWB 3.3 does, described next.  DWB 3.3: (1)
-.\" omits the secretarial annotation altogether, but puts the third and
-.\" subsequent `AU` arguments in the cover header under the authors'
-.\" names [the scan does not]; (2) does not use author initials (in the
-.\" cover header) (3) puts the department number after "Org." on the
-.\" line under the author name; (4) puts the abbreviated AT&T site name
-.\" below that.  Should we consider a `Sganno` Boolean-valued register
-.\" for groff mm?
+.\" Scan has a couple of vees between the signature line and the flush
+.\" left secretarial annotation (containing arguments after the second
+.\" to `AU` macro calls).  groff mm sets the annotation on the same line
+.\" as the last author.  DWB 3.3 omits the secretarial annotation
+.\" altogether.  GBR thinks this is not worth parameterizing in groff.
 .SG
+.\" Scan says "Att:" with a colon, whereas DWB 3.3 spells it "Att.".
+.\" GBR thinks this is not worth parameterizing in groff.
 .NS 3
 References
 Table 1
 .NE
 .RP "" 2
-.\" XXX: Scan has references caption set flush left, in mixed case and
-.\" bold (just like `HU`).  DWB 3.3 and groff center it and set it in
-.\" full caps in italics (at normal weight).  If there were a way to
-.\" dump the accumulated reference list independently of rendering the
-.\" caption, that would give the author much more flexibility.
-.\"
-.\" XXX: The numbered reference list does not look like one produced
-.\" with `RL` nor with `AL`.  The numeric tag is left-aligned within the
-.\" paragraph indentation.  groff mm aligns it to the right.  Extend
-.\" groff mm to support this.
-.\"
 .\" DWB 3.3 and Heirloom mm don't seem to honor `.RP "" 2` as the DWB
 .\" manual documents.  They start the table immediately after the
 .\" reference list and go haywire boxing the table.  Bug in DWB.
 .\" (You could work around it by using `.TS H` and `.TH`.)
-.TS
+.TS H
 box center;
 L L C C C C
 L L N N N N.
 Program	System	Text	Data	Bss	Total
+.TH
 \&
 /unix
 \&	\*(pD	48064	2470	44040	94574
