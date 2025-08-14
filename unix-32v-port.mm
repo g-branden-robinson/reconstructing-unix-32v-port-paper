@@ -53,7 +53,7 @@ A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .AU "John F.\& Reiser" jfr HO 1353
 .do ds Aumt 3 4\" suppress these AU fields from metadata block
 .do nr Rfstyle 1
-.ds Rpfmt \\n[Li] 0 0 1 0 0 0\"
+.do ds Rpfmt \\n[Li] 0 0 1 0 0 0\"
 .TM 78-1353-4
 .ND "July 7, 1978"
 .if !\n(.g .ig
@@ -1840,12 +1840,12 @@ Table 1
 .\" manual documents.  They start the table immediately after the
 .\" reference list and go haywire boxing the table.  Bug in DWB.
 .\" (You could work around it by using `.TS H` and `.TH`.)
-.TS H
+.TS \"H
 box center;
-L L C C C C
-L L N N N N.
+L1 L C2 C2 C2 C
+L1 L N2 N2 N2 N.
 Program	System	Text	Data	Bss	Total
-.TH
+.\"TH
 \&
 /unix
 \&	\*(pD	48064	2470	44040	94574
