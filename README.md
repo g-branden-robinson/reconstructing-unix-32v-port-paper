@@ -1,2 +1,24 @@
-# reconstructing-unix-32v-port-paper
-Reconstruction of London &amp; Reiser's paper documenting the port of Unix to the VAX 11/780, using groff mm
+"A Unix Operating System for the DEC VAX-11/780 Computer", Reconstructed
+========================================================================
+
+Reiser and London's paper documenting their preparation of UNIX/32V,[1]
+a port of Seventh Edition Unix to the VAX-11/780, is an important
+milestone in Unix development--as much I think for its frank critique of
+C as "portable assembly" as for the status of the system documented: the
+last common ancestor of the BSD and System V branches of development.
+
+Because the only version I've ever seen of this paper is a scan of,
+possibly, a photocopy several generations removed from the original, I
+thought I'd throw an OCR tool at it and see about reconstructing it, not
+just for posterity but to put the groff implementation of mm to the
+test.  So even if someone has a beautiful scan of this document
+elsewhere, this exercise was worthwhile to me for what it has shown me
+about Documenter's Workbench mm and groff's mostly compatible
+reimplementation thereof.  Preparing this reconstruction drove numerous
+improvements in groff mm, all of which appear in groff's 1.24.0 release.
+
+[1] London and Reiser do not use the name "UNIX/32V"; it seems likely
+    that this label became attached later.  McIlroy applied it
+    specifically to this work.
+
+    https://www.cs.dartmouth.edu/~doug/reader.pdf
