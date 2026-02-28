@@ -13,7 +13,8 @@ thought I'd throw an OCR tool at it and see about reconstructing it, not
 just for posterity but to put the groff implementation of mm to the
 test.  So even if someone has a beautiful scan of this document
 elsewhere, this exercise was worthwhile to me for what it has shown me
-about Documenter's Workbench mm and groff's mostly compatible
+about the (initially "Programmer's Workbench", later "Documenter's
+Workbench") mm macro package for troff and and groff's mostly compatible
 reimplementation thereof.  Preparing this reconstruction drove numerous
 improvements in groff mm, all of which appear in groff's 1.24.0 release.
 
