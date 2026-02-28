@@ -18,7 +18,7 @@ reimplementation thereof.  Preparing this reconstruction drove numerous
 improvements in groff mm, all of which appear in groff's 1.24.0 release.
 
 [1] London and Reiser do not use the name "UNIX/32V"; it seems likely
-    that this label became attached later.  McIlroy applied it
-    specifically to this work.
-
-    https://www.cs.dartmouth.edu/~doug/reader.pdf
+    that this label became attached later.
+    [McIlroy](https://www.cs.dartmouth.edu/~doug/reader.pdf) and
+    [Ritchie](https://www.nokia.com/bell-labs/about/dennis-m-ritchie/portpapers.html)
+    applied it specifically to this work.
