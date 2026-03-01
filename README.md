@@ -8,6 +8,17 @@ C as "portable assembly" as for the status of the system documented: the
 last common ancestor of the BSD and System III (and later System V)
 branches of development.
 
+Like almost everything Unix-related that came out of Bell Labs in its
+era, this document was originally formatted using the
+[troff](https://en.wikipedia.org/wiki/Troff) typesetting system.  And
+like much Unix-related software that came out of Bell Labs in the same
+era, troff was later reimplemented by GNU as
+[groff](https://www.gnu.org/software/groff/).  London & Reiser's paper
+appears to have been formatted using the _mm_ ("memorandum") macro
+package, rather than the _ms_ ("manuscript") package favored by the
+Labs' Computing Science Research Center, whence troff and Unix itself
+originated.
+
 Because the only version I've ever seen of this paper is a scan of,
 possibly, a photocopy several generations removed from the original, I
 thought I'd throw an OCR tool at it and see about reconstructing it, not
