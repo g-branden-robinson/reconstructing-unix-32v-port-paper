@@ -97,7 +97,7 @@ A \*(UX\*(Tm Operating System for the DEC \*(vX/780 Computer
 .\" To reproduce this document better, groff mm implements a string to
 .\" keep some `AU` arguments from printing in the cover header.  We
 .\" can't just drop them from the reconstruction because they are also
-.\" used to the construct the secretarial annotation produced by `SG`.
+.\" used to construct the secretarial annotation produced by `SG`.
 .\" groff Git, September 2024, supports `Aumt` for this purpose.
 .\"
 .\" In the scan, the right column of the cover header happily overrruns
