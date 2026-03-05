@@ -219,8 +219,8 @@ The actual configuration purchased by Department 1353 is:
 .\" somebody wanted this list _just so_.
 .\"VL \n(Pi 0 1
 .LB \n(Pi "" "" 0 0 0
-.\" DWB mm requires the list item to be an unadjustable space to get the
-.\" effect desired here.  groff mm tolerates an ordinary space.
+.\" DWB mm requires the list item mark to be an unadjustable space to
+.\" get the effect desired here.  groff mm tolerates an ordinary space.
 .LI "\ "
 \*(vX/780 cpu
 .LI "\ "
